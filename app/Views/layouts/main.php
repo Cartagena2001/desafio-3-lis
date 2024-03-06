@@ -6,6 +6,7 @@
     <title><?= $this->renderSection('title') ?></title>
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/datatables/dataTables.dataTables.min.css') ?>">
+    <link rel="icon" href="<?= base_url('assets/media/images/favicon.png') ?>">
 </head>
 <body>
     <?= $this->renderSection('content') ?>
