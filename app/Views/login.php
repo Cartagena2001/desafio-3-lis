@@ -10,17 +10,18 @@
                     <div class="row">
                         <div class="col-md-9 col-lg-8 mx-auto">
                             <h3 class="login-heading mb-4">Bienvenido al control de finanzas</h3>
-                            <form>
+                            <form id="login-form" method="POST">
                                 <div class="form-floating mb-3">
-                                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                    <input type="email" class="form-control" id="correo" name="correo" placeholder="name@example.com">
                                     <label for="floatingInput">Correo electronico</label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                                    <input type="password" class="form-control" id="contra" name="contra" placeholder="Password">
                                     <label for="floatingPassword">Contraseña</label>
                                 </div>
+                                <div id="form-error" class="alert alert-warning" role="alert"></div>
                                 <div class="d-grid">
-                                    <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Iniciar sesion</button>
+                                    <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" id="submit-btn">Iniciar sesion</button>
                                     <div class="text-center">
                                         <a class="small" href="#">Olvide mi contraseña?</a>
                                     </div>
@@ -39,7 +40,7 @@
     }
 
     .bg-image {
-        background-image: url('https://source.unsplash.com/WEQbe2jBg40/600x1200');
+        background-image: url('https://images.pexels.com/photos/5466785/pexels-photo-5466785.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
         background-size: cover;
         background-position: center;
     }
@@ -56,6 +57,5 @@
 </style>
 <?php echo $this->endSection() ?>
 <?php echo $this->section('scripts') ?>
-<script>
-</script>
+<script src="<?= base_url('assets/js/custom/login/login.js') ?>"></script>
 <?php echo $this->endSection() ?>
