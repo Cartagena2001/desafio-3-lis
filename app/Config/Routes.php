@@ -16,5 +16,13 @@ $routes->group('api', function ($routes) {
 
     $routes->group('auth', function ($routes) {
         $routes->post('login', 'AuthController::login');
+        $routes->post('logout' , 'AuthController::logout');
+    });
+
+    $routes->group('dashboard', function ($routes) {
+        $routes->group('registro', function ($routes) {
+            $routes->get('getRegistros', 'Dashboard\RegistroController::getRegistros');
+            $routes->post('storeRegistro', 'Dashboard\RegistroController::storeRegistro');
+        });
     });
 });
