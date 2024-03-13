@@ -19,12 +19,14 @@
                                     <input type="password" class="form-control" id="contra" name="contra" placeholder="Password">
                                     <label for="floatingPassword">Contraseña</label>
                                 </div>
-                                <div id="form-error" class="alert alert-warning" role="alert"></div>
+                                <div class="mb-3 mt-3">
+                                <span id="form-error" class="badge bg-warning text-dark"></span>
+                                </div>
                                 <div class="d-grid">
                                     <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" id="submit-btn">Iniciar sesion</button>
-                                    <div class="text-center">
+                                    <!-- <div class="text-center">
                                         <a class="small" href="#">Olvide mi contraseña?</a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </form>
                         </div>

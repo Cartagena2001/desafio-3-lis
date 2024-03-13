@@ -22,6 +22,9 @@ $(document).ready(function () {
           for (let key in data.errors) {
             $("#form-error").text(data.errors[key]);
             $("#form-error").show();
+            setTimeout(() => {
+              $("#form-error").hide();
+            }, 5000);
             break;
           }
         }

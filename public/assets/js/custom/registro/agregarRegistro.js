@@ -48,7 +48,7 @@ async function saveEntrada() {
     await Swal.fire({
       icon: "warning",
       title: "Completa los campos requeridos",
-      text: errorMessages.join("\n"),
+      html: errorMessages.join("<br>"),
     });
 
     //camabiar texto del boton guardando a agregar
