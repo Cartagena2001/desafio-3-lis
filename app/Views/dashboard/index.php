@@ -6,6 +6,8 @@
     <div class="mb-5">
       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#entrada" data-bs-whatever="@mdo">Agregar Registro</button>
     </div>
+    <h1 class="h3 mb-65 blockquote">Registros (Salidas y Entradas)</h1>
+    <p class="blockquote-footer">Administra tus registros</p>
     <?php echo $this->include("partials/registroTables") ?>
     <?php echo $this->include("partials/entrada/agregarReporte") ?>
   </div>
