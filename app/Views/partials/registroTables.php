@@ -1,3 +1,11 @@
+<div class="mb-5">
+    <label for="tipo_registro">Filtra por Tipo de registro</label>
+    <select name="tipo_registro" id="tipo_registro" class="form-control">
+        <option value="0">Selecciona un tipo de registro</option>
+        <option value="Entrada">Entrada</option>
+        <option value="Salida">Salida</option>
+    </select>
+</div>
 <table id="registros" class="display table table-striped" style="width:100%">
     <thead>
         <tr>
@@ -20,7 +28,10 @@
     new DataTable('#registros', {
         ajax: `${hostUrl}api/dashboard/registro/getRegistros`,
         columns: [{
-                data: 'monto'
+                data: 'monto',
+                render: function(data, type, row) {
+                    return '$' + data;
+                }
             },
             {
                 data: 'fecha'
@@ -62,6 +73,11 @@
                 "previous": "Anterior"
             }
         }
+    });
+
+    $("#tipo_registro").on("change", function() {
+        var value = $(this).val();
+        $("#registros").DataTable().search(value).draw();
     });
 </script>
 <?php echo $this->endSection() ?>

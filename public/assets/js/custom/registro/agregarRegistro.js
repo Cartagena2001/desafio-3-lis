@@ -62,6 +62,11 @@ function resetInputs() {
   $("#fecha").val("");
   $("#factura").val("");
   $("#categoria").val("");
+  $("#tipo").val("");
   $("#agregar").html("Agregar");
   $("#agregar").attr("disabled", false);
 }
+
+$("#entrada").on("hidden.bs.modal", function () {
+  resetInputs();
+});
