@@ -5,25 +5,59 @@ namespace App\Controllers\reports;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\RegistroModel;
+use App\Controllers\PdfController; 
+
 
 class ReportsController extends BaseController
 {
 
     public function index()
     {
-        // Obtener los datos de entradas y salidas
         $entradas = $this->getEntradas();
         $salidas = $this->getSalidas();
-
-        // Pasar los datos a la vista
         $data = [
             'entradas' => $entradas['data'],
             'totalEntradas' => $entradas['total'],
             'salidas' => $salidas['data'],
             'totalSalidas' => $salidas['total']
         ];
-
+         
         return view('reports/reports', $data);
+    }
+
+
+
+    public function pdfView()
+    {
+        $entradas = $this->getEntradas();
+        $salidas = $this->getSalidas();
+
+        $data = [
+            'entradas' => $entradas['data'],
+            'totalEntradas' => $entradas['total'],
+            'salidas' => $salidas['data'],
+            'totalSalidas' => $salidas['total'],
+            ];
+        
+        $pdfController = new PdfController();
+        $pdfController->generatePDF($data);
+    }
+
+    public function pieView()
+    {
+            $html = view('partials/pie-chart');
+            $data['html'] = $html;
+            return view('partials/pie-chart-pdf', $data);
+    }
+
+    public function getDataPie(){
+        $registroModel = new RegistroModel();
+        $registro = $registroModel->select('tipo_registros.tipo_registro, registro.monto')
+            ->join('tipo_registros', 'tipo_registros.id = registro.id_tipo_registro')
+            ->findAll();
+           return [
+                'data' => $registro,
+            ];
     }
 
     public function getEntradas()

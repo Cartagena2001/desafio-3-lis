@@ -33,7 +33,7 @@ $routes->group('api', function ($routes) {
             $routes->get('getEntradas', 'reports\ReportsController::getEntradas');
             $routes->get('getSalidas', 'reports\ReportsController::getSalidas');
             $routes->get('initPieChart', 'reports\PieChartController::initPieChart');
-            $routes->get('generatePDF', 'PdfController::generatePDF');
+            $routes->get('pdfView', 'reports\ReportsController::pdfView');
         });
     });
 });
