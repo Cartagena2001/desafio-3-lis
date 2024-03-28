@@ -1,74 +1,64 @@
-<body>
-    <div class="container">
-        <div class="">
-            <div id="GooglePieChart" style="height: 600px; width: 100%"></div>
-        </div>
+<div class="container">
+    <div class="">
+        <div id="GooglePieChart" style="height: 600px; width: 100%"></div>
     </div>
-    <input type="hidden" name="hidden_html" id="hidden_html" />
-    <button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Make PDF</button>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</div>
+<?php echo $this->section('scripts') ?>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load('current', {
+        packages: ['corechart']
+    });
+    google.charts.setOnLoadCallback(drawPieChart);
 
-    <script>
-        google.charts.load('current', {
-            packages: ['corechart']
-        });
-        google.charts.setOnLoadCallback(drawPieChart);
+    function drawPieChart() {
+        $.ajax({
+            url: `${hostUrl}api/reports/report/initPieChart`,
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 200) {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Tipo');
+                    data.addColumn('number', 'Monto');
 
-        function drawPieChart() {
-            $.ajax({
-                url: `${hostUrl}api/reports/report/initPieChart`,
-                type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status == 200) {
-                        var data = new google.visualization.DataTable();
-                        data.addColumn('string', 'Tipo');
-                        data.addColumn('number', 'Monto');
+                    var totalAmount = 0;
+                    var entriesAmount = 0;
+                    var exitsAmount = 0;
 
-                        var totalAmount = 0;
-                        var entriesAmount = 0;
-                        var exitsAmount = 0;
+                    response.data.forEach(function(item) {
+                        totalAmount += parseFloat(item.monto);
+                        if (item.tipo_registro === 'Entrada') {
+                            entriesAmount += parseFloat(item.monto);
+                        } else if (item.tipo_registro === 'Salida') {
+                            exitsAmount += parseFloat(item.monto);
+                        }
+                    });
 
-                        response.data.forEach(function(item) {
-                            totalAmount += parseFloat(item.monto);
-                            if (item.tipo_registro === 'Entrada') {
-                                entriesAmount += parseFloat(item.monto);
-                            } else if (item.tipo_registro === 'Salida') {
-                                exitsAmount += parseFloat(item.monto);
-                            }
-                        });
+                    var entriesPercentage = (entriesAmount / totalAmount) * 100;
+                    var exitsPercentage = (exitsAmount / totalAmount) * 100;
 
-                        var entriesPercentage = (entriesAmount / totalAmount) * 100;
-                        var exitsPercentage = (exitsAmount / totalAmount) * 100;
+                    data.addRow(['Entradas (' + entriesPercentage.toFixed(2) + '%)', entriesAmount]);
+                    data.addRow(['Salidas (' + exitsPercentage.toFixed(2) + '%)', exitsAmount]);
 
-                        data.addRow(['Entradas (' + entriesPercentage.toFixed(2) + '%)', entriesAmount]);
-                        data.addRow(['Salidas (' + exitsPercentage.toFixed(2) + '%)', exitsAmount]);
-
-                        var options = {
-                            title: 'Registros de Entradas y Salidas',
-                            is3D: true,
-                        };
-
-                        var chart = new google.visualization.PieChart(document.getElementById('GooglePieChart'));
-                        chart.draw(data, options);
-                    } else {
-                        console.error('Error: ' + response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error: ' + error);
+                    var options = {
+                        title: 'Registros de Entradas y Salidas',
+                        is3D: true,
+                    };
+                    var chart_area = document.getElementById('GooglePieChart');
+                    var chart = new google.visualization.PieChart(document.getElementById('GooglePieChart'));
+                    google.visualization.events.addListener(chart, 'ready', function() {
+                        chart_area.innerHTML = '<img src="' + chart.getImageURI() + '" class="img-responsive">';
+                    });
+                    chart.draw(data, options);
+                } else {
+                    console.error('Error: ' + response.message);
                 }
-            });
-        }
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('#create_pdf').click(function() {
-                $('#hidden_html').val($('#testing').html());
-                $('#make_pdf').submit();
-            });
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error: ' + error);
+            }
         });
-    </script>
-
-</body>
+    }
+</script>
+<?php echo $this->endSection() ?>

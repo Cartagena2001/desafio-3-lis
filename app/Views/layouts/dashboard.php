@@ -19,7 +19,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="<?= base_url('assets/js/bootstrap.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/jquery-3.7.1.min.js') ?>"></script>
-    <script src="<?= base_url('assets/js/datatables/bootstrap.bundle.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/datatables/dataTables.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/datatables/dataTables.bootstrap5.min.js') ?>"></script>
     <?= $this->renderSection('scripts') ?>

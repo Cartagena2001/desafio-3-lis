@@ -7,19 +7,16 @@ use Dompdf\Options;
 
 class PdfController extends BaseController
 {
-    public function generatePDF($data)
+    public function makePDF()
     {
-        $options = new Options();
-        $options->set('defaultFont', 'Helvetica');
-        $dompdf = new Dompdf($options);
+        $file_name = 'reports.pdf';
+        $html = '<link rel="stylesheet" href="bootstrap.min.css">';
+        $html .= $_POST["hidden_html"];
 
-        $pie_chart_html = view('partials/pie-chart-pdf');
-
-        $html = $pie_chart_html;
-
+        $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream('reports.pdf', array('Attachment' => 0));
+        $dompdf->stream($file_name, array('Attachment' => 0));
     }
 }
